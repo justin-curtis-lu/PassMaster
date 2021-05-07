@@ -12,7 +12,7 @@ def main():
     app = QApplication(sys.argv)
 
     # Create database ( exit if not successful )
-    if not createConnection("contacts.sqlite"):
+    if not createConnection("passwords.sqlite"):
         sys.exit(1)
 
     # Create the main window

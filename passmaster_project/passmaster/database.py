@@ -4,7 +4,7 @@ from PyQt5.QtSql import QSqlDatabase, QSqlQuery
 
 
 
-def _createContactsTable():
+def _createPasswordsTable():
     """Create the contacts table in the database."""
     createTableQuery = QSqlQuery()
     return createTableQuery.exec(
@@ -31,10 +31,10 @@ def createConnection(databaseName):
     if not connection.open():
         QMessageBox.warning(
             None,
-            "RP Contact",
+            "Password Master",
             f"Database Error: {connection.lastError().text()}",
         )
         return False
 
-    _createContactsTable()
+    _createPasswordsTable()
     return True
