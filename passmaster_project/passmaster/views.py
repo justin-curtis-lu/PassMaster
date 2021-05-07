@@ -22,7 +22,7 @@ from PyQt5.QtWidgets import (
     QWidget
 )
 
-from .model import ContactsModel
+from .model import PasswordsModel
 
 # Application's main Window (Inherits from QMainWindow class)
 class Window(QMainWindow):
@@ -36,14 +36,14 @@ class Window(QMainWindow):
         self.setCentralWidget(self.centralWidget)
         self.layout = QHBoxLayout()
         self.centralWidget.setLayout(self.layout)
-        self.contactsModel = ContactsModel()
+        self.PasswordsModel = PasswordsModel()
         self.setupUI()
 
     def setupUI(self):
         """Setup the main window's GUI."""
         # Create the table view widget
         self.table = QTableView()
-        self.table.setModel(self.contactsModel.model)
+        self.table.setModel(self.PasswordsModel.model)
         # Full row view
         self.table.setSelectionBehavior(QAbstractItemView.SelectRows)
         self.table.resizeColumnsToContents()
@@ -51,8 +51,9 @@ class Window(QMainWindow):
         self.addButton = QPushButton("Add...")
         self.addButton.clicked.connect(self.openAddDialog)
         self.deleteButton = QPushButton("Delete")
-        self.deleteButton.clicked.connect(self.deleteContact)
+        self.deleteButton.clicked.connect(self.deletePassword)
         self.clearAllButton = QPushButton("Clear All")
+        self.clearAllButton.clicked.connect(self.clearPasswords)
         # Lay out the GUI
         layout = QVBoxLayout()
         layout.addWidget(self.addButton)
@@ -62,8 +63,20 @@ class Window(QMainWindow):
         self.layout.addWidget(self.table)
         self.layout.addLayout(layout)
 
-    def deleteContact(self):
-        """Delete the selected contact from the database."""
+    def clearPasswords(self):
+        """Remove all passwords from the database."""
+        messageBox = QMessageBox.warning(
+            self,
+            "Warning!",
+            "Do you want to remove all your passwords?",
+            QMessageBox.Ok | QMessageBox.Cancel,
+        )
+
+        if messageBox == QMessageBox.Ok:
+            self.PasswordsModel.clearPasswords()
+
+    def deletePassword(self):
+        """Delete the selected password from the database."""
         row = self.table.currentIndex().row()
         if row < 0:
             return
@@ -71,22 +84,22 @@ class Window(QMainWindow):
         messageBox = QMessageBox.warning(
             self,
             "Warning!",
-            "Do you want to remove the selected contact?",
+            "Do you want to remove the selected password?",
             QMessageBox.Ok | QMessageBox.Cancel,
         )
 
         if messageBox == QMessageBox.Ok:
-            self.contactsModel.deleteContact(row)
+            self.PasswordsModel.deletePassword(row)
 
     def openAddDialog(self):
-        """Open the Add Contact dialog."""
+        """Open the Add Password dialog."""
         dialog = AddDialog(self)
         if dialog.exec() == QDialog.Accepted:
-            self.contactsModel.addPassword(dialog.data)
+            self.PasswordsModel.addPassword(dialog.data)
             self.table.resizeColumnsToContents()
 
 class AddDialog(QDialog):
-    """Add Contact dialog."""
+    """Add Password dialog."""
     def __init__(self, parent=None):
         """Initializer."""
         super().__init__(parent=parent)
@@ -98,7 +111,7 @@ class AddDialog(QDialog):
         self.setupUI()
 
     def setupUI(self):
-        """Setup the Add Contact dialog's GUI."""
+        """Setup the Add Password dialog's GUI."""
         # Create line edits for data fields
         self.nameField = QLineEdit()
         self.nameField.setObjectName("Name")
@@ -133,7 +146,7 @@ class AddDialog(QDialog):
                 QMessageBox.critical(
                     self,
                     "Error!",
-                    f"You must provide a entry's {field.objectName()}",
+                    f"You must provide the {field.objectName()}",
                 )
                 self.data = None  # Reset .data
                 return

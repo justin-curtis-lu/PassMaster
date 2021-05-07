@@ -9,8 +9,7 @@ def _createPasswordsTable():
     createTableQuery = QSqlQuery()
     return createTableQuery.exec(
         """
-        CREATE TABLE IF NOT EXISTS contacts (
-            id INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE NOT NULL,
+        CREATE TABLE IF NOT EXISTS passwords (
             name VARCHAR(40) NOT NULL,
             user VARCHAR(40) NOT NULL,
             pass VARCHAR(50),
