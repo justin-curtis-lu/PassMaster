@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b38b7369-a41c-4a63-b57e-f25720130106" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/passmaster_project/passmaster/model.py" beforeDir="false" afterPath="$PROJECT_DIR$/passmaster_project/passmaster/model.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/passmaster_project/passmaster/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/passmaster_project/passmaster/views.py" afterDir="false" />
     </list>
