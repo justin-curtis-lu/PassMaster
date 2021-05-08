@@ -22,6 +22,9 @@ from PyQt5.QtWidgets import (
     QWidget
 )
 
+# Image
+from PyQt5.QtGui import QPixmap
+
 from .model import PasswordsModel
 
 # Application's main Window (Inherits from QMainWindow class)
@@ -30,7 +33,7 @@ class Window(QMainWindow):
     def __init__(self, parent=None):
         """Initializer."""
         super().__init__(parent)
-        self.setWindowTitle("Password Master")
+        self.setWindowTitle("Pass Master")
         self.resize(550, 250)
         self.centralWidget = QWidget()
         self.setCentralWidget(self.centralWidget)
@@ -40,14 +43,14 @@ class Window(QMainWindow):
         self.setupUI()
 
     def setupUI(self):
-        """Setup the main window's GUI."""
+        """GUI Setup."""
         # Create the table view widget
         self.table = QTableView()
         self.table.setModel(self.PasswordsModel.model)
         # Full row view
         self.table.setSelectionBehavior(QAbstractItemView.SelectRows)
         self.table.resizeColumnsToContents()
-        # Create buttons
+        # Create buttons for Add, Delete, and Clear All
         self.addButton = QPushButton("Add...")
         self.addButton.clicked.connect(self.openAddDialog)
         self.deleteButton = QPushButton("Delete")

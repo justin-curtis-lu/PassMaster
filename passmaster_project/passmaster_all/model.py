@@ -18,7 +18,7 @@ class PasswordsModel:
         return tableModel
 
     def addPassword(self, data):
-        """Add a contact to the database."""
+        """Add a password to the database."""
         rows = self.model.rowCount()
         self.model.insertRows(rows, 1)
         for column, field in enumerate(data):
@@ -27,13 +27,13 @@ class PasswordsModel:
         self.model.select()
 
     def deletePassword(self, row):
-        """Remove a contact from the database."""
+        """Remove a password from the database."""
         self.model.removeRow(row)
         self.model.submitAll()
         self.model.select()
 
     def clearPasswords(self):
-        """Remove all contacts in the database."""
+        """Remove all passwords in the database."""
         self.model.setEditStrategy(QSqlTableModel.OnManualSubmit)
         self.model.removeRows(0, self.model.rowCount())
         self.model.submitAll()
